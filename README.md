@@ -11,9 +11,11 @@
 
 如何部署:
 
-1. 使用Git命令行工具，克隆本仓库至本地:`git clone https://github.com/lmliheng/document.git`
+1. `fork`到个人仓库
 
-2. 将项目中的静态文件上传至您的托管服务
+2. 设置仓库的`setting`中`GitHub pages`，选择`main`分支并`save`保存
+
+3. 在个人仓库的`action`里，可以看到部署好的项目对应域名
 
 ### 🤝 贡献指南
 

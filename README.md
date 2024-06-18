@@ -4,7 +4,7 @@
 
 ### 🌐 在线访问
 
-[访问原网站](http://document.liheng.work/)或者[访问GitHub pages网站](http://document.liheng.work/)
+[访问原网站](http://document.liheng.work/)或者[访问GitHub pages网站]([http://document.liheng.work/](https://lmliheng.github.io/document/))
 
 ![image](https://github.com/lmliheng/document/assets/159103134/3e00dd5a-364e-449c-9571-c6e429de0203)
 

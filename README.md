@@ -6,6 +6,8 @@
 
 [点击访问](http://document.liheng.work/)
 
+![image](https://github.com/lmliheng/document/assets/159103134/3e00dd5a-364e-449c-9571-c6e429de0203)
+
 ### 💻 部署指南
 本项目基于静态网页技术，可轻松部署至各类支持静态托管的服务平台，如`GitHub Pages`、`Netlify`等。
 

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="HENG" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>wikijs - node笔记</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "wikijs";
+        var mkdocs_page_input_path = "wikijs.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> node笔记
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">主页</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="wikijs.html">wikijs</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">node笔记</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">wikijs</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="_1">部署</h2>
+<p>1） nohup</p>
+<pre><code class="language-bash">nohup node server &amp;
+</code></pre>
+<p>2) PM2
+使用 npm 安装 pm2：</p>
+<pre><code class="language-bash">sudo npm install -g pm2
+</code></pre>
+<p>使用 pm2 启动 Wiki.js 服务器：</p>
+<pre><code class="language-bash">pm2 start server
+</code></pre>
+<p>要确保 pm2 在系统重启后自动启动 Wiki.js 服务器，运行以下命令：</p>
+<pre><code class="language-bash">pm2 startup
+</code></pre>
+<p>然后按照终端中显示的说明操作。</p>
+<p>保存当前 pm2 进程列表：</p>
+<pre><code class="language-bash">pm2 save
+</code></pre>
+<p>现在，Wiki.js 服务器将由 pm2 管理并在后台持续运行。即使在系统重启后，pm2 也会自动启动 Wiki.js 服务器。</p>
+<p>要查看 pm2 管理的进程列表，运行以下命令：</p>
+<pre><code class="language-bash">pm2 list
+</code></pre>
+<p>要查看 Wiki.js 服务器的日志，运行以下命令：</p>
+<pre><code class="language-bash">pm2 logs
+</code></pre>
+<p>要停止 Wiki.js 服务器，运行以下命令：</p>
+<pre><code class="language-bash">pm2 stop server.js
+</code></pre>
+<p>要重启 Wiki.js 服务器，运行以下命令：</p>
+<pre><code class="language-bash">pm2 restart server.js
+</code></pre>
+<p>3) forever</p>
+<p>使用 npm 安装 forever：</p>
+<pre><code class="language-bash">sudo npm install -g forever
+</code></pre>
+<p>使用 forever 启动 Wiki.js 服务器：</p>
+<pre><code class="language-bash">forever start server.js
+</code></pre>
+<p>这将在后台启动 Wiki.js 服务器，并确保它持续运行。</p>
+<p>要查看由 forever 管理的进程列表，运行以下命令：</p>
+<pre><code class="language-bash">forever list
+</code></pre>
+<p>要查看 Wiki.js 服务器的日志，运行以下命令：</p>
+<pre><code class="language-bash">forever logs server.js
+</code></pre>
+<p>或者，你可以查看特定进程的日志：</p>
+<pre><code class="language-bash">forever logs&lt;process_id&gt;
+</code></pre>
+<p>将<process_id>` 替换为实际的进程 ID。</p>
+<p>要停止 Wiki.js 服务器，运行以下命令：</p>
+<pre><code class="language-bash">forever stop server.js
+</code></pre>
+<p>或者，你可以停止特定进程：</p>
+<pre><code class="language-bash">forever stop&lt;process_id&gt;
+</code></pre>
+<p>将<process_id>` 替换为实际的进程 ID。</p>
+<p>要重启 Wiki.js 服务器，运行以下命令：</p>
+<pre><code class="language-bash">forever restart server.js
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="index.html" class="btn btn-neutral float-left" title="主页"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1738 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="HENG">
+      
+      
+      
+        <link rel="prev" href="database.html">
+      
+      
+        <link rel="next" href="cron.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>文件上传与生成 - Django杂记</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.66ac8b77.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Django杂记" class="md-header__button md-logo" aria-label="Django杂记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Django杂记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              文件上传与生成
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Django杂记" class="md-nav__button md-logo" aria-label="Django杂记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Django杂记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    主页
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="settings.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    配置文件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="models.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    模型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="urls.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    路由
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="view.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    视图
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="admin.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    管理员
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="template.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    模板
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="static.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    静态资源
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="database.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据库
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    文件上传与生成
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="file.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    文件上传与生成
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件上传
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="文件上传">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、简单上传，手动保存
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、 使用模型处理上传的文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、 同时上传多个文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、关于上传文件的处理器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、动态修改上传处理器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      全局概念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file" class="md-nav__link">
+    <span class="md-ellipsis">
+      File 对象
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File 对象">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      File 类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contentfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      ContentFile类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      ImageFile 类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      File storage 类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File storage 类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      获取当前存储类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filesystemstorage" class="md-nav__link">
+    <span class="md-ellipsis">
+      FileSystemStorage 类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义Storage类
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      生成CSV文件
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生成CSV文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pythoncsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、使用Python的CSV库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、使用Django的模板系统
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      生成PDF文件
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生成PDF文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reportlab" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、安装ReportLab
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、编写视图
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cron.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    定时任务
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="translator.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    流媒体
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="linux.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    部署笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="codeplan.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计划表项目搭建
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mkdocs.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mkdocs笔记
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="markdown.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Markdown格式
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件上传
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="文件上传">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、简单上传，手动保存
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、 使用模型处理上传的文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、 同时上传多个文件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、关于上传文件的处理器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、动态修改上传处理器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      全局概念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file" class="md-nav__link">
+    <span class="md-ellipsis">
+      File 对象
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File 对象">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      File 类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contentfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      ContentFile类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      ImageFile 类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      File storage 类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File storage 类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      获取当前存储类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filesystemstorage" class="md-nav__link">
+    <span class="md-ellipsis">
+      FileSystemStorage 类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义Storage类
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      生成CSV文件
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生成CSV文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pythoncsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、使用Python的CSV库
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、使用Django的模板系统
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      生成PDF文件
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生成PDF文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reportlab" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、安装ReportLab
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、编写视图
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h2 id="_1">文件上传</h2>
+<p>Django在处理文件上传时，文件数据会被打包封装在<code>request.FILES</code>中。</p>
+<h3 id="_2">一、简单上传，手动保存</h3>
+<p>首先，写一个form模型，它必须包含一个<code>FileField</code>：</p>
+<p>from django import forms</p>
+<p>class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()</p>
+<p>处理这个表单的视图将在<code>request.FILES</code>中收到文件数据，可以用<code>request.FILES['file']</code>来获取上传文件的具体数据，其中的键值<code>'file'</code>是根据<code>file = forms.FileField()</code>的变量名来的。</p>
+<p>注意：<code>request.FILES</code>只有在请求方法为POST,并且提交请求的<code>&lt;form&gt;</code>具有<code>enctype="multipart/form-data"</code>属性时才有效。 否则，<code>request.FILES</code>将为空。</p>
+<p>下面是一个接收上传文件的视图范例：</p>
+<p># views.py</p>
+<p>from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import UploadFileForm</p>
+<p># 另外写一个处理上传过来的文件的方法，并在这里导入
+from somewhere import handle_uploaded_file</p>
+<p>def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})  # 思考一下这个return语句是否可以缩进到else语句中呢？</p>
+<p>请注意，必须将<code>request.FILES</code>传递到form的构造函数中。</p>
+<p>form = UploadFileForm(request.POST, request.FILES)</p>
+<p>下面是一个处理上传文件的方法的参考例子：</p>
+<p>def handle_uploaded_file(f):
+    with open('some/file/name.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)</p>
+<p>遍历<code>UploadedFile.chunks()</code>，而不是直接使用<code>read()</code>方法，能确保大文件不会占用系统过多的内存。</p>
+<h3 id="_3">二、 使用模型处理上传的文件</h3>
+<p>如果是通过模型层的model来指定上传文件的保存方式的话，使用ModelForm更方便。 调用<code>form.save()</code>的时候，文件对象会保存在相应的<code>FileField</code>的<code>upload_to</code>参数指定的地方。</p>
+<p>from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import ModelFormWithFileField</p>
+<p>def upload_file(request):
+    if request.method == 'POST':
+        form = ModelFormWithFileField(request.POST, request.FILES)
+        if form.is_valid():
+            # 这么做就可以了，文件会被保存到Model中upload_to参数指定的位置
+            form.save()
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = ModelFormWithFileField()
+    return render(request, 'upload.html', {'form': form})</p>
+<p>如果手动构造一个对象，还可以简单地把文件对象直接从<code>request.FILES</code>赋值给模型：</p>
+<p>from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import UploadFileForm
+from .models import ModelWithFileField</p>
+<p>def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = ModelWithFileField(file_field=request.FILES['file'])
+            instance.save()
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})</p>
+<h3 id="_4">三、 同时上传多个文件</h3>
+<p>如果要使用一个表单字段同时上传多个文件，需要设置字段HTML标签的multiple属性为True，如下所示：</p>
+<p># forms.py</p>
+<p>from django import forms</p>
+<p>class FileFieldForm(forms.Form):
+    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))</p>
+<p>然后，自己编写一个<code>FormView</code>的子类，并覆盖它的post方法，来处理多个文件上传：</p>
+<p># views.py
+from django.views.generic.edit import FormView
+from .forms import FileFieldForm</p>
+<p>class FileFieldView(FormView):
+    form_class = FileFieldForm
+    template_name = 'upload.html'  # 用你的模版名替换.
+    success_url = '...'  # 用你的URL或者reverse()替换.</p>
+<pre><code>def post(self, request, *args, **kwargs):
+    form_class = self.get\_form\_class()
+    form = self.get_form(form_class)
+    files = request.FILES.getlist('file_field')
+    if form.is_valid():
+        for f in files:
+            ...  \# 对每个文件做处理
+        return self.form_valid(form)
+    else:
+        return self.form_invalid(form)
+</code></pre>
+<h3 id="_5">四、关于上传文件的处理器</h3>
+<p>当用户上传一个文件的时候，Django会把文件数据传递给上传文件处理器。</p>
+<p>上传处理器的配置定义在<code>FILE_UPLOAD_HANDLERS</code>中，默认为：</p>
+<p>["django.core.files.uploadhandler.MemoryFileUploadHandler", "django.core.files.uploadhandler.TemporaryFileUploadHandler"]</p>
+<p><code>MemoryFileUploadHandler</code>和<code>TemporaryFileUploadHandler</code>定义了Django的默认文件上传行为：将小文件读取到内存中，大文件放置在磁盘中。</p>
+<p>你可以编写自己的 handlers 来自定义如何处理文件。比如，你可以使用自定义强制处理用户层面的配额，动态压缩数据，渲染进度条，甚至可以将数据发送到其他存储地址而不是本地。</p>
+<p>在你保存上传文件之前，数据需要储存在某个地方。通常，如果上传文件小于2.5MB，Django会把整个内容存到内存。 这意味着，文件的保存仅仅涉及到内存中的读取和磁盘的写入，所以非常快。</p>
+<p>但是，如果上传的文件很大，Django会把它写入一个临时文件，储存在你的系统临时目录中。在类Unix的平台下，Django会生成一个文件，名称类似于<code>/tmp/tmpzfp6I6.upload</code>。</p>
+<h3 id="_6">五、动态修改上传处理器</h3>
+<p>有时候某些视图需要不同的上传行为。也就是说，在视图中动态修改处理器列表，即<code>request.upload_handlers</code></p>
+<p>比如，假设你正在编写 <code>ProgressBarUploadHandler</code> ，用来提供上传过程中的反馈。你需要添加这个处理程序到你的上传处理模块：</p>
+<p>request.upload_handlers.insert(0, ProgressBarUploadHandler(request))</p>
+<p>在这里使用 <code>list.insert()</code> （而不是 <code>append()</code> ），因为进度条处理程序需要在其他处理程序之前使用。</p>
+<p><strong>记住，列表中的上传处理程序是按顺序处理的。</strong></p>
+<p>如果你想完全替换掉先前的上传处理程序，只需要指定新列表：</p>
+<p>request.upload_handlers = [ProgressBarUploadHandler(request)]</p>
+<p><strong>你只能在访问 <code>request.POST</code> 或 <code>request.FILES</code> 之前修改上传处理程序</strong>。开始上传动作后修改上传处理程序没有意义，并且Django 会报错。</p>
+<p>而且，默认的， <code>CsrfViewMiddleware</code>中间件会访问<code>request.POST</code>。这意味着你需要在视图上使用 <code>csrf_exempt()</code> 来允许你改变上传处理程序。然后你需要在实际处理请求的函数上使用 <code>csrf_protect()</code> 。注意这可能会让处理程序在 CSRF 检测完成之前开始接受文件上传。如下所示：</p>
+<p>from django.views.decorators.csrf import csrf_exempt, csrf_protect</p>
+<p>@csrf_exempt
+def upload_file_view(request):
+    request.upload_handlers.insert(0, ProgressBarUploadHandler(request))
+    return _upload_file_view(request)</p>
+<p>@csrf_protect
+def _upload_file_view(request):
+    ... # Process request</p>
+<h2 id="_7">全局概念</h2>
+<p>在详细介绍Django对文件进行处理的功能之前，我们要了解一些它的基本概念、组织方式、使用套路、主要的类和继承关系。</p>
+<p>如果你不了解这些，那么复杂的源码、交错的官方文档会让你陷入泥坑。不知道怎么用？什么时候用？用什么？为什么这么用？整个一团乱！</p>
+<p>这些代码都位于<code>django.core.files</code>模块中，它们主要包括：</p>
+<ul>
+<li>File的概念：Django对Python文件的封装。既可以用于文件上传过程中的处理，也可以单独使用</li>
+<li><code>File</code>类：Django实现File的基类</li>
+<li><code>ContentFile</code>类：继承了File类，不同之处是它处理的是字符串</li>
+<li><code>ImageFile</code> 类：继承了File类，添加了图像的宽度和长度像素值</li>
+<li><code>File</code>类的其它子类：实际上Django为<code>File</code>类还编写了一系列<code>Upload...</code>子类，只是使用较少。</li>
+<li>File storage的概念：将Django的File对象保存到存储系统的API库，也就是Django如何将数据保存到硬盘中的。</li>
+<li><code>settings.DEFAULT_FILE_STORAGE</code>:一个Django配置项，用来指定默认的文件存储类。默认值为<code>'django.core.files.storage.FileSystemStorage'</code>，在<code>globa_settings</code>中。</li>
+<li><code>get_storage_class()</code>方法：Django提供的一个函数，通过字符串反射的方式获取指定的存储类或者<code>DEFAULT_FILE_STORAGE</code>设置的存储类</li>
+<li><code>DefaultStorage</code>类:对<code>get_storage_class()</code>方法返回的对象类的进一步封装</li>
+<li><code>default_storage</code>:<code>DefaultStorage</code>类的实例</li>
+<li><code>Storage</code>类：Django源码中所有存储类的基类，提供通用的接口API</li>
+<li><code>FileSystemStorage</code>：继承了<code>Storage</code>类，是Django原生实现的最重要、最常用、最普通的存储类。我们绝大多数时间实际使用的就是它！</li>
+</ul>
+<h2 id="file">File 对象</h2>
+<p>Django设计了自己的文件对象。要记住，Django的File对象可以脱离本章的文件上传概念，独立使用！</p>
+<h3 id="file_1">File 类</h3>
+<p>File 类是围绕Python原生file对象的轻度包装，添加了一些Django特有的东西。Django在内部使用File类的实例来表示文件对象。</p>
+<p>每个File对象都包含下面的属性和方法：</p>
+<ul>
+<li>name：文件名。包括<code>MEDIA_ROOT</code>定义的相对路径部分。</li>
+<li>size：文件的尺寸，字节单位。</li>
+<li>file：注意，这是File对象的file属性，不要搞混淆了！它表示File类封装的底层文件对象（Python文件对象）。</li>
+<li>mode：文件的读/写模式</li>
+<li>
+<p>open(mode=None)：打开或者重新打开文件。mode参数和Python内置的open方法的参数一样。可以使用上下文管理器<code>with file.open() as f:</code></p>
+</li>
+<li>
+<p><code>__iter__()</code>：遍历文件一次生成一行。</p>
+</li>
+<li>
+<p>chunks(chunk_size=None)：遍历文件，分割成指定大小的“块”。<code>chunk_size</code> 默认为64 KB。这对于非常大的文件特别有用，因为它允许从磁盘流式传输，避免将整个文件存储在内存中。</p>
+</li>
+<li>
+<p>multiple_chunks(chunk_size=None)：以指定的<code>chunk_size</code>进行测试，如果文件大到需要分割成多个数据块进行访问，则返回<code>True</code>，否则返回False。</p>
+</li>
+<li>
+<p>close()：关闭文件</p>
+</li>
+</ul>
+<p>除以上属性和方法之外，还有下面的方法：</p>
+<ul>
+<li><code>encoding</code></li>
+<li><code>fileno</code></li>
+<li><code>flush</code></li>
+<li><code>isatty</code></li>
+<li><code>newlines</code></li>
+<li><code>read</code></li>
+<li><code>readinto</code></li>
+<li><code>readline</code></li>
+<li><code>readlines</code></li>
+<li><code>seek</code></li>
+<li><code>tell</code></li>
+<li><code>truncate</code></li>
+<li><code>write</code></li>
+<li><code>writelines</code>,</li>
+<li><code>readable()</code></li>
+<li><code>writable()</code></li>
+<li><code>seekable()</code></li>
+</ul>
+<p>望文生义，它们都和Python原生的文件操作方法类似。</p>
+<p>如果你想创建一个 <code>File</code> 实例，最简单的方法是使用 Python 内置的 <code>file</code> 对象：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from django.core.files import File</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p># 使用Python原生的open()方法</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>f = open('/path/to/hello.world', 'w')
+myfile = File(f)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>注意在这里创建的文件不会自动关闭。下面的方式可以用来自动关闭文件：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from django.core.files import File</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p># Create a Python file object using open() and the with statement</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>with open('/path/to/hello.world', 'w') as f:
+...     myfile = File(f)
+...     myfile.write('Hello World')
+...
+myfile.closed
+True
+f.closed
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>如果文件在访问后没有关闭，可能会出现文件描述符溢出的风险。</p>
+<p>OSError: [Errno 24] Too many open files</p>
+<h3 id="contentfile">ContentFile类</h3>
+<p><code>ContentFile</code>类直接继承了<code>File</code>类，但是前者操作的是字符串或者字节内容，而不是确切的文件。例如：</p>
+<p>from django.core.files.base import ContentFile</p>
+<p>f1 = ContentFile("esta frase está en español")
+f2 = ContentFile(b"these are bytes")</p>
+<h3 id="imagefile">ImageFile 类</h3>
+<p>Django为图片特别提供了一个内置类，也就是<code>django.core.files.images.ImageFile</code>，它也继承了File类。只是额外增加了两个属性：</p>
+<ul>
+<li>width： 图片的像素宽度</li>
+<li>height：图片的像素高度</li>
+</ul>
+<p>比如下面的模型，使用 <code>ImageField</code> 来存储照片：</p>
+<p>from django.db import models</p>
+<p>class Car(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    photo = models.ImageField(upload_to='cars')</p>
+<p>所有的 Car 实例都拥有一个 photo 属性，你可以使用它来获取照片的详细信息：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>car = Car.objects.get(name="57 Chevy")
+car.photo
+<ImageFieldFile: cars/chevy.jpg>
+car.photo.name
+'cars/chevy.jpg'
+car.photo.path      # 图片在文件系统中的路径
+'/media/cars/chevy.jpg'
+car.photo.url   # 访问图片的url
+'http://media.example.com/cars/chevy.jpg'</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><code>car.photo</code> 其实是一个 <code>File</code> 对象，这意味着它拥有下面所描述的所有方法和属性。</p>
+<p>可以通过将文件名设置为相对于文件存储位置的路径来更改文件名（如果你正在使用默认的 FileSystemStorage ，则为 MEDIA_ROOT ）。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import os
+from django.conf import settings
+initial_path = car.photo.path
+car.photo.name = 'cars/chevy_ii.jpg'
+new_path = settings.MEDIA_ROOT + car.photo.name
+# Move the file on the filesystem
+os.rename(initial_path, new_path)
+car.save()
+car.photo.path
+'/media/cars/chevy_ii.jpg'
+car.photo.path == new_path
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>更多的 <code>ImageField</code> 使用例子：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from PIL import Image
+car = Car.objects.get(name='57 Chevy')
+car.photo.width
+191
+car.photo.height
+287
+image = Image.open(car.photo)
+# 抛出ValueError异常。因为你在尝试打开已经关闭的文件</p>
+<p>car.photo.open()  # 打开文件
+<ImageFieldFile: cars/chevy.jpg>
+image = Image.open(car.photo)  # 再次创建Image实例
+image
+<PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=191x287 at 0x7F99A94E9048></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>另外，此时这个File对象会有两个附加的方法save和delete：</p>
+<ul>
+<li>File.save（name，content，save = True）</li>
+</ul>
+<p>使用提供的文件名和内容保存一个新的文件。这不会替换现有文件，但会创建一个新文件并更新该对象以指向该文件（也就是说保留外面那层用来封装的皮，把内部实际的文件内容替换掉）。如果save=True，将立刻执行模型的save方法。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>car.photo.save('myphoto.jpg', content, save=False)
+car.save()
+# 等同于
+car.photo.save('myphoto.jpg', content, save=True)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>File.delete（save = True）</li>
+</ul>
+<p>从模型实例中删除文件。如果save=True，删除文件后将立刻执行模型的save方法。</p>
+<h2 id="file-storage">File storage 类</h2>
+<h3 id="_8">获取当前存储类</h3>
+<p>在本章的一开始，我们实现了一个简单的文件上传例子。用户从浏览器通过POST发送过来文件数据，Django通过<code>request.FILES</code>拿到数据，然后我们简单粗暴地使用Python语言原生的文件操作API将数据保存到了文件系统中，通常也就是硬盘中。</p>
+<p>Django为了方便我们，提供了存储类，用来帮助我们将数据保存到存储器中，不需要手动调用open方法。</p>
+<p>你在模型中可能看到过这样的写法：</p>
+<p>file=models.FileField(storage='xxx',......)</p>
+<p>其中的storage参数就是我们要指定的存储器类。如果你不指定这个参数，Django就会使用settings中配置的默认存储类进行处理。</p>
+<p>所以，我们首先要知道<code>DEFAULT_FILE_STORAGE</code>配置项，它指定Django默认的存储类，默认值为<code>'django.core.files.storage.FileSystemStorage'</code>。一般情况下，我们无感静默使用，什么都不用做。</p>
+<p>但是，Django总是千方百计为我们开后门，提供钩子。</p>
+<p>Django额外又为我们提供了三种获取存储类的简便方法，用于在代码中动态修改要使用的存储类：</p>
+<ul>
+<li><code>get_storage_class</code>(import_path=None)</li>
+</ul>
+<p>先看看它的源代码：</p>
+<p>def get_storage_class(import_path=None):
+    return import_string(import_path or settings.DEFAULT_FILE_STORAGE)</p>
+<p>就两行！</p>
+<p>它的作用是返回实现了存储API的存储类或者模块。</p>
+<p>如果不提供参数，就使用<code>settings.DEFAULT_FILE_STORAGE</code>，也就是上面说的。</p>
+<p>如果提供参数，Django将使用Python的字符串反射机制，获取对应的模块。</p>
+<p><code>get_storage_class</code>方法可以用在任何地方，它不属于任何类，是个独立函数。</p>
+<ul>
+<li><code>DefaultStorage</code>类</li>
+</ul>
+<p>看看它的源代码：</p>
+<p>class DefaultStorage(LazyObject):
+    def _setup(self):
+        self._wrapped = get_storage_class()()</p>
+<p>三行！调用上面的<code>get_storage_class</code>方法并实例化，然后赋值给<code>_wrapped</code>，最后获得的就是<code>'django.core.files.storage.FileSystemStorage'</code>。</p>
+<ul>
+<li><code>default_storage</code>变量</li>
+</ul>
+<p>源代码如下：</p>
+<p>default_storage = DefaultStorage()</p>
+<p>根本就是<code>DefaultStorage</code>的一个实例。所以，<code>from django.core.files.storage import default_storage</code>其实就是获得了一个<code>FileSystemStorage</code>对象。</p>
+<p>看下面的例子：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p># 注意，这个save方法是有返回值的！返回值是文件在存储系统中的路径。可以通过这个路径再去查找文件。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>path = default_storage.save('path/to/file', ContentFile(b'new content'))
+path
+'path/to/file'</p>
+<p>default_storage.size(path)
+11
+default_storage.open(path).read()
+b'new content'</p>
+<p>default_storage.delete(path)
+default_storage.exists(path)
+False</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="storage">Storage类</h3>
+<p>Storage类是Django为我们提供的存储基类，实现了一些标准的API和一些可以被子类重写的默认行为。</p>
+<p>name参数：文件名</p>
+<ul>
+<li>
+<p><code>delete</code>(<em>name</em>)：删除指定名字的文件。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>exists</code>(<em>name</em>)： 如果文件已经存在，返回True，否则False</p>
+</li>
+<li>
+<p><code>get_accessed_time</code>(<em>name</em>): 返回上次访问该文件的时间，以<code>datetime</code>类型。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>get_alternative_name</code>(<em>file_root</em>, <em>file_ext</em>)：返回基于<code>file_root</code>和 <code>file_ext</code>参数的备用文件名，在扩展名之前，在文件名后附加一个下划线和一个随机的7个字符的字母数字字符串。3.0新增。</p>
+</li>
+<li>
+<p><code>get_available_name</code>(<em>name</em>, <em>max_length=None</em>)：据<code>name</code>参数返回自由可用的文件名。文件名的长度将不超过<code>max_length</code>（如果提供）。如果找不到自由的唯一文件名，则会引发<code>SuspiciousFileOperation</code>异常 。</p>
+</li>
+<li>
+<p><code>get_created_time</code>(<em>name</em>)： 返回文件的创建时间。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>get_modified_time</code>(<em>name</em>)：返回上次修改该文件的时间，以<code>datetime</code>类型。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>get_valid_name</code>(<em>name</em>)：根据<code>name</code>参数，返回一个在目标存储系统上可用的合法文件名。</p>
+</li>
+<li>
+<p><code>generate_filename</code>(<em>filename</em>)：验证并返回一个文件名。</p>
+</li>
+<li>
+<p><code>listdir</code>(<em>path</em>)： 列出指定path下的内容，然会一个列表的二元元组。第一个元素是目录列表，第二个元素是文件列表。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>open</code>(<em>name</em>, <em>mode='rb'</em>)：以指定的mode打开文件</p>
+</li>
+<li>
+<p><code>path</code>(<em>name</em>)：返回文件的路径，通过该路径可以使用Python原生的open()方法打开文件。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>save</code>(<em>name</em>, <em>content</em>, <em>max_length=None</em>)：保存文件。如果文件名已经存在，会自动修改生成合适的文件名。content参数必须是一个<code>django.core.files.File</code>的实例，或者可以被File包装的类文件对象。</p>
+</li>
+<li>
+<p><code>size</code>(<em>name</em>)：返回文件的大小，字节单位。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+<li>
+<p><code>url</code>(<em>name</em>)：返回URL，通过该URL可以访问文件的内容。如果子类没有实现这个方法，会弹出<code>NotImplementedError</code> 异常。</p>
+</li>
+</ul>
+<p>方法很多，不一定全要掌握，重点是下面这几个：</p>
+<ul>
+<li>delete</li>
+<li>exists</li>
+<li>listdir</li>
+<li>open</li>
+<li>path</li>
+<li>save</li>
+<li>size</li>
+<li>url</li>
+</ul>
+<h3 id="filesystemstorage">FileSystemStorage 类</h3>
+<p>实际上，我们不直接使用Storage类，而是使用FileSystemStorage 类，这也是Django实现的唯一的本地文件系统存储类。</p>
+<blockquote>
+<p><code>FileSystemStorage</code>（<em>location = None</em>，<em>base_url = None</em>，<em>file_permissions_mode = None</em>，<em>directory_permissions_mode = None</em>）</p>
+</blockquote>
+<p>FileSystemStorage类直接继承了Storage类，并提供了下面的额外属性：</p>
+<ul>
+<li>
+<p><code>location</code>： 存放文件的目录的绝对路径。默认为<code>MEDIA_ROOT</code>设置的值。</p>
+</li>
+<li>
+<p><code>base_url</code>： 用于访问文件的URL的基础前缀。默认为<code>MEDIA_URL</code>的值。</p>
+</li>
+<li>
+<p><code>file_permissions_mode</code>： 文件的系统权限。默认为<code>FILE_UPLOAD_PERMISSIONS</code>配置项的值。</p>
+</li>
+<li>
+<p><code>directory_permissions_mode</code>：目录的系统权限。默认为<code>FILE_UPLOAD_DIRECTORY_PERMISSIONS</code>配置项的值。</p>
+</li>
+</ul>
+<p>FileSystemStorage类实现了全套的我们在Storage类中介绍过的子类必须实现的方法。</p>
+<p>但是要注意， <code>FileSystemStorage.delete()</code> 方法如果删除不存在的文件，不会引发异常。</p>
+<p>下面的代码将上传文件存储到 <code>/media/photos</code> ，而不是你在 <code>MEDIA_ROOT</code> 中设置的路径：</p>
+<p>from django.core.files.storage import FileSystemStorage
+from django.db import models</p>
+<p># 自定义存储路径
+fs = FileSystemStorage(location='/media/photos')</p>
+<p>class Car(models.Model):
+    ...
+    photo = models.ImageField(storage=fs)</p>
+<p>Django 3.1开始，<code>FileSystemStorage.save()</code>方法支持使用<code>pathlib.Path</code>类，并且支持回调函数形式的storage参数，如下所示：</p>
+<p>from django.conf import settings
+from django.db import models
+from .storages import MyLocalStorage, MyRemoteStorage</p>
+<p>def select_storage():
+    return MyLocalStorage() if settings.DEBUG else MyRemoteStorage()</p>
+<p>class MyModel(models.Model):
+    my_file = models.FileField(storage=select_storage)</p>
+<p>这就赋予了我们在运行过程中，动态选择存储类的能力。</p>
+<h2 id="storage_1">自定义Storage类</h2>
+<p>如果你需要自定义文件储存功能，比如把文件储存在远程系统中，你可以自己编写Storage类来实现这一功能。</p>
+<p>实际上大多数情况下，对于本地磁盘存储，我们直接使用<code>FileSystemStorage</code>即可，对于别的需求，一般有第三方的存储类可用，在Django的生态库里查找即可。自己编写Storage类存在可靠性、可用性、安全性、性能问题，新手绕行，老手慎重。</p>
+<p>但无论如何，这里还是给出基本的编写要求，以供参考：</p>
+<p>第一：必须继承 <code>Django.core.files.storage.Storage</code></p>
+<p>from django.core.files.storage import Storage</p>
+<p>class MyStorage(Storage):
+    ...</p>
+<p>第二：Django 必须能以无参数的状态，实例化你的存储系统。这意味着所有的设置项都应从 <code>dango.conf.settings</code> 中获取:</p>
+<p>from django.conf import settings
+from django.core.files.storage import Storage</p>
+<p>class MyStorage(Storage):
+    def __init__(self, option=None):
+        if not option:
+            option = settings.CUSTOM_STORAGE_OPTIONS
+        ...</p>
+<p>第三：在你的存储类中，除了其他自定义的方法外，还必须实现 <code>_open()</code> 以及 <code>_save()</code> 方法。另外，如果你的类提供了本地文件存储功能，还必须重写 <code>path()</code> 方法。</p>
+<p>第四：你的存储类必须是 <code>deconstructible</code>可解构的，以便在迁移中的字段上使用它时可以序列化。</p>
+<p>第五：尽量实现下列方法：</p>
+<ul>
+<li><code>Storage.delete()</code></li>
+<li><code>Storage.exists()</code></li>
+<li><code>Storage.listdir()</code></li>
+<li><code>Storage.size()</code></li>
+<li><code>Storage.url()</code></li>
+</ul>
+<p>举例来说，如果列出某些存储后端的内容的代价很昂贵，那么你可以不实现 <code>Storage.listdir()</code> 方法。</p>
+<p>另一个例子是只处理写入文件的后端。在这种情况下，你不需要实现上述任何方法。</p>
+<hr />
+<p>另外，下面是经常会用到专为自定义存储对象设计的两个钩子函数：</p>
+<ul>
+<li>
+<p><code>_open</code>(<em>name</em>, <em>mode='rb'</em>)：真正执行打开文件功能的方法。它将被 <code>Storage.open()</code> 调用。</p>
+</li>
+<li>
+<p><code>_save</code>(<em>name</em>, <em>content</em>)：真正执行保存功能的方法。它将被 <code>Storage.save()</code>调用。</p>
+</li>
+</ul>
+<h1 id="csv">生成CSV文件</h1>
+<p>CSV (Comma Separated Values)，以纯文本形式存储数字和文本数据的存储方式。纯文本意味着该文件是一个字符序列，不含必须像二进制数字那样的数据。CSV文件由任意数目的记录组成，记录间以某种换行符分隔；每条记录由字段组成，字段间的分隔符是其它字符或字符串，最常见的是逗号或制表符。通常，所有记录都有完全相同的字段序列。</p>
+<p>CSV最常用的场景就是数据分析和机器学习中源数据的载体。</p>
+<p>要在Django的视图中生成CSV文件，可以使用Python的CSV库或者Django的模板系统来实现。</p>
+<h2 id="pythoncsv">一、使用Python的CSV库</h2>
+<p>Python自带处理CSV文件的标准库csv。csv模块的CSV文件创建功能作用于类似于文件对象创建，并且Django的HttpResponse对象也是类似于文件的对象。</p>
+<p>下面是个例子：</p>
+<p>import csv
+from django.http import HttpResponse</p>
+<p>def some_view(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'</p>
+<pre><code>writer = csv.writer(response)
+writer.writerow(\['First row', 'Foo', 'Bar', 'Baz'\])
+writer.writerow(\['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"\])
+
+return response
+</code></pre>
+<p>相关说明：</p>
+<ul>
+<li>响应对象的MIME类型设置为<code>text/csv</code>，告诉浏览器，返回的是一个CSV文件而不是HTML文件。</li>
+<li>响应对象设置了附加的<code>Content-Disposition</code>协议头，含有CSV文件的名称。文件名随便取，浏览器会在“另存为...”对话框等环境中使用它。</li>
+<li>要在生成CSV的API中使用钩子非常简单：只需要把response作为第一个参数传递给<code>csv.writer</code>。<code>csv.writer</code>方法接受一个类似于文件的对象，而HttpResponse对象正好就是这么个东西。</li>
+<li>对于CSV文件的每一行，调用<code>writer.writerow</code>，向它传递一个可迭代的对象比如列表或者元组。</li>
+<li>CSV模板会为你处理各种引用，不用担心没有转义字符串中的引号或者逗号。只需要向writerow()传递你的原始字符串，它就会执行正确的操作。</li>
+</ul>
+<p>当处理大尺寸文件时，可以使用Django的<code>StreamingHttpResponse</code>类，通过流式传输，避免负载均衡器在服务器生成响应的时候断掉连接，提高传输可靠性。</p>
+<p>在下面的例子中，利用Python的生成器来有效处理大尺寸CSV文件的拼接和传输：</p>
+<pre><code>import csv
+
+from django.http import StreamingHttpResponse
+
+class Echo:
+    &quot;&quot;&quot;An object that implements just the write method of the file-like
+ interface.
+ &quot;&quot;&quot;
+    def write(self, value):
+        &quot;&quot;&quot;Write the value by returning it, instead of storing in a buffer.&quot;&quot;&quot;
+        return value
+
+def some\_streaming\_csv_view(request):
+    &quot;&quot;&quot;A view that streams a large CSV file.&quot;&quot;&quot;
+    \# Generate a sequence of rows. The range is based on the maximum number of
+    \# rows that can be handled by a single sheet in most spreadsheet
+    \# applications.
+    rows = (\[&quot;Row {}&quot;.format(idx), str(idx)\] for idx in range(65536))
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    response = StreamingHttpResponse((writer.writerow(row) for row in rows),
+                                     content_type=&quot;text/csv&quot;)
+    response\['Content-Disposition'\] = 'attachment; filename=&quot;somefilename.csv&quot;'
+    return response
+</code></pre>
+<h2 id="django">二、使用Django的模板系统</h2>
+<p>也可以使用Django的模板系统来生成CSV。比起便捷的Python-csv库，这样做比较低级，不建议使用，这里只是展示一下有这种方式而已。</p>
+<p>思路是，传递一个项目的列表给你的模板，并且让模板在for循环中输出逗号。下面是一个例子，它像上面一样生成相同的CSV文件：</p>
+<p>from django.http import HttpResponse
+from django.template import loader</p>
+<p>def some_view(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'</p>
+<pre><code>\# The data is hard-coded here, but you could load it from a database or
+\# some other source.
+csv_data = (
+    ('First row', 'Foo', 'Bar', 'Baz'),
+    ('Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"),
+)
+
+t = loader.get_template('my\_template\_name.txt')
+c = {'data': csv_data}
+response.write(t.render(c))
+return response
+</code></pre>
+<p>然后，创建模板<code>my_template_name.txt</code>，带有以下模板代码：</p>
+<p>{% for row in data %}"{{ row.0|addslashes }}", "{{ row.1|addslashes }}", "{{ row.2|addslashes }}", "{{ row.3|addslashes }}", "{{ row.4|addslashes }}"
+{% endfor %}</p>
+<h1 id="pdf">生成PDF文件</h1>
+<p>阅读: 28974     <a href="#comments">评论</a>：3</p>
+<hr />
+<p>可以通过开源的Python PDF库<code>ReportLab</code>来实现PDF文件的动态生成。</p>
+<h2 id="reportlab">一、安装ReportLab</h2>
+<p>ReportLab库在PyPI上提供，可以使用pip来安装：</p>
+<p>$ pip install reportlab</p>
+<p>在Python交互解释器中导入它来测试安装：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import reportlab</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>如果没有抛出任何错误，证明已安装成功。</p>
+<h2 id="_9">二、编写视图</h2>
+<p>利用 Django 动态生成 PDF 的关键是 ReportLab API 作用于类文件对象，而 Django 的 <code>FileResponse</code> 对象接收类文件对象。</p>
+<p>这有个 "Hello World" 示例:</p>
+<p>import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas</p>
+<p>def some_view(request):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()</p>
+<pre><code>\# Create the PDF object, using the buffer as its "file."
+p = canvas.Canvas(buffer)
+
+\# Draw things on the PDF. Here's where the PDF generation happens.
+\# See the ReportLab documentation for the full list of functionality.
+p.drawString(100, 100, "Hello world.")
+
+\# Close the PDF object cleanly, and we're done.
+p.showPage()
+p.save()
+
+\# FileResponse sets the Content-Disposition header so that browsers
+\# present the option to save the file.
+buffer.seek(0)
+return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+</code></pre>
+<p>相关说明：</p>
+<ul>
+<li>MIME会自动设置为<code>application/pdf</code>。</li>
+<li>将 <code>as_attachment=True</code> 传递给 <code>FileResponse</code> 时，表示这是一个可下载附件，它会设置合适的 <code>Content-Disposition</code> 头，告诉 Web 浏览器弹出一个对话框，提示或确认如何处理该文档，即便设备已配置默认行为。若省略了 <code>as_attachment</code> 参数，浏览器会用已配置的用于处理 PDF 的程序或插件来处理该 PDF。</li>
+<li>你也可以提供可选参数 <code>filename</code>。浏览器的<code>“另存为…”</code>对话框会用到它。</li>
+<li>注意，所有后续生成 PDF 的方法都是在 PDF 对象上调用的（本例中是 <code>p</code>）——而不是在 <code>buffer</code> 上调用。</li>
+<li>
+<p>最后，牢记在 PDF 文件上调用 <code>showPage()</code> 和 <code>save()</code>。</p>
+</li>
+<li>
+<p>注意：ReportLab并不是线程安全的。</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="HENG" /><link rel="canonical" href="https://example.com/admin/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>管理员 - Django杂记</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u7ba1\u7406\u5458";
+        var mkdocs_page_input_path = "admin.md";
+        var mkdocs_page_url = "/admin/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Django杂记
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="搜索" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">主页</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../settings/index.html">配置文件</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/index.html">模型</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../urls/index.html">路由</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../view/index.html">视图</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">管理员</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#django">找到django文件路径</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#html">配置html模板找寻路径</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#base_sitehtml">修改base_site.html</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../template/index.html">模板</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../static/index.html">静态资源</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../database/index.html">数据库</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../file/index.html">文件上传与生成</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cron/index.html">定时任务</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../translator/index.html">流媒体</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linux/index.html">部署笔记</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../codeplan/index.html">计划表项目搭建</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mkdocs/index.html">mkdocs笔记</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../markdown/index.html">Markdown格式</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django杂记</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">管理员</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h3 id="_1">管理员站点页面美化</h3>
+<h6 id="django">找到django文件路径</h6>
+<pre><code>python -c &quot;import django; print(django.__path__)&quot;
+</code></pre>
+<h6 id="html">配置html模板找寻路径</h6>
+<p>在setting.py文件里TEMPLATES修改</p>
+<pre><code>TEMPLATES = [
+    {'DIRS': [BASE_DIR / 'templates'], 
+     }
+]
+</code></pre>
+<h6 id="base_sitehtml">修改base_site.html</h6>
+<p>并将base_site.html模板复制到templates目录下</p>
+<p><code>admin后台是一个内置的app，本质上和你的polls是一样的
+直接修改Django源码不是好的做法，所以我们不直接修改base_site.html模板
+我们复制了一份模板，在其中修改了站点名字
+为了让修改的模板能够自动替换原来的模板，我们创建了一个templates目录
+这个新建的template目录之所以能起作用，是因为我们在settings中配置了一个DIRS。
+当render需要base_site.html的时候，Django执行机制会首先去寻找DIRS中是否有base_site.html模板，结果找到了！于是它不再继续寻找，所以admin源码中的base_site.html模板被忽视了，成功达到了我们的目的。</code></p>
+<h3 id="admin">admin页面注册模型</h3>
+<pre><code class="language-python">from django.contrib import admin
+from .models import Choice
+
+admin.site.register(Choice)
+</code></pre>
+<h3 id="_2">外键</h3>
+<p>```
+Django在admin站点中，自动地将所有的外键关系展示为一个select框</p>
+<p>```</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../view/index.html" class="btn btn-neutral float-left" title="视图"><span class="icon icon-circle-arrow-left"></span> 上一个</a>
+        <a href="../template/index.html" class="btn btn-neutral float-right" title="模板">下一个<span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+ 
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../view/index.html" style="color: #fcfcfc">&laquo; 上一个</a></span>
+    
+    
+      <span><a href="../template/index.html" style="color: #fcfcfc">下一个 &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

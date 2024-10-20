@@ -18,7 +18,10 @@
 
 3. 在个人仓库的`action`里，可以看到部署好的项目对应域名
 
-支持docker部署
+支持docker部署，最后一次[docker提交参考](https://hub.docker.com/r/lmliheng/lihe-document/tags)
+```angular2html
+docker pull lmliheng/lihe-document:1.0
+```
 
 ### 底层
 使用[`mkdocs`](https://www.mkdocs.org/)进行构建

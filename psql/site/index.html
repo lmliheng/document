@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="connect.html">
+        <link rel="next" href="server.html">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -57,6 +57,8 @@
   
   
     
+    
+      
     
     
     
@@ -114,7 +116,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="indigo"  aria-label="亮色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="亮色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="暗色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="暗色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -271,7 +299,7 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      一键部署
+      文档
     </span>
   </a>
   
@@ -279,6 +307,15 @@
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一键部署
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       检查软件路径
     </span>
@@ -290,6 +327,26 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="server.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    服务
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -325,7 +382,7 @@
         
   
   <span class="md-ellipsis">
-    增删改查
+    操作
   </span>
   
 
@@ -341,31 +398,51 @@
   
   
     <li class="md-nav__item">
-      <a href="exam.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    检查
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="copy.html" class="md-nav__link">
+      <a href="backup.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     备份
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="psql.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    客户端
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="example.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    案例
   </span>
   
 
@@ -403,7 +480,7 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      一键部署
+      文档
     </span>
   </a>
   
@@ -411,6 +488,15 @@
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一键部署
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       检查软件路径
     </span>
@@ -437,16 +523,18 @@
 
 
 <h1 id="hello">Hello , 我是恒</h1>
-<h2 id="_1">一键部署</h2>
-<p>一键部署psql14：<code>curl -O https://heng1.oss-cn-beijing.aliyuncs.com/psql_install.sh &amp;&amp; bash psql_install.sh</code>
-修改密码：
+<h2 id="_1">文档</h2>
+<p>参考<a href="http://www.postgres.cn/docs/14/index.html">官方文档</a></p>
+<h2 id="_2">一键部署</h2>
+<p>一键部署psql14：<code>curl -O https://heng1.oss-cn-beijing.aliyuncs.com/psql_install.sh &amp;&amp; bash psql_install.sh</code></p>
+<p>修改密码：
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">[</span>root@RainYun-mjzwJWoB<span class="w"> </span>~<span class="o">]</span><span class="c1"># sudo -u postgres psql -c &quot;ALTER USER postgres WITH PASSWORD &#39;postgres&#39;;&quot;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>could<span class="w"> </span>not<span class="w"> </span>change<span class="w"> </span>directory<span class="w"> </span>to<span class="w"> </span><span class="s2">&quot;/root&quot;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ALTER<span class="w"> </span>ROLE
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="o">[</span>root@RainYun-mjzwJWoB<span class="w"> </span>~<span class="o">]</span><span class="c1"># </span>
-</span></code></pre></div>
-默认账号：<code>postgres</code>,修改后密码：<code>postgres</code></p>
-<h2 id="_2">检查软件路径</h2>
+</span></code></pre></div></p>
+<p>脚本配置默认账号：<code>postgres</code>,修改后密码：<code>postgres</code></p>
+<h2 id="_3">检查软件路径</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">[</span>root@RainYun-Q7c3pCXM<span class="w"> </span>pgsql-14<span class="o">]</span><span class="c1"># cd /var/lib/pgsql/14</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">[</span>root@RainYun-Q7c3pCXM<span class="w"> </span><span class="m">14</span><span class="o">]</span><span class="c1"># ls</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>backups<span class="w">  </span>data<span class="w">  </span>initdb.log
